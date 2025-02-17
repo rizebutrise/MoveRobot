@@ -1,11 +1,12 @@
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
 
-public class MoveRobot {
+public class Robot {
     private int X;
     private int Y;
     private Direction direction;
 
-    public MoveRobot(int currentX, int currentY, Direction nowDirection) {
+    public void MoveRobot(int currentX, int currentY, Direction nowDirection) {
         this.X = currentX;
         this.Y = currentY;
         this.direction = nowDirection;
@@ -92,22 +93,17 @@ public class MoveRobot {
         RIGHT
     }
 
-    public static void moveRobot(MoveRobot robot, int toX, int toY) {
-
-        if (robot.getY() < toY) {
-            while (robot.getDirection() != Direction.UP) robot.turnRight();
-            while (robot.getY() < toY) robot.stepForward();
-        } else if (robot.getY() > toY) {
-            while (robot.getDirection() != Direction.DOWN) robot.turnRight();
-            while (robot.getY() > toY) robot.stepForward();
+    public static void turn(Robot robot, Direction direction) {
+        while (robot.getDirection() != direction) {
+            if (robot.getDirection().ordinal() < direction.ordinal()) {
+                robot.turnRight();
+            } else robot.turnLeft();
         }
-        if (robot.getX() < toX) {
-            while (robot.getDirection() != Direction.RIGHT) robot.turnRight();
-            while (robot.getX() < toX) robot.stepForward();
-        } else if (robot.getX() > toX) {
-            while (robot.getDirection() != Direction.LEFT) robot.turnRight();
-            while (robot.getX() > toX) robot.stepForward();
+    }
 
+    public static void go(Robot robot, int step) {
+        for (int i = 0; i < step; i++) {
+            robot.stepForward();
         }
     }
 }
